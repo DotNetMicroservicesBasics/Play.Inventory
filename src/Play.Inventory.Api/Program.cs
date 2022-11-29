@@ -1,4 +1,5 @@
 using Play.Common.Data;
+using Play.Inventory.Api.Clients;
 using Play.Inventory.Data.Entities;
 
 namespace Play.Catalog.Api;
@@ -14,6 +15,11 @@ public class Program
 
         builder.Services.AddMongoDb()
                         .AddMongoRepository<InventoryItem>("InventoryItems");
+
+        builder.Services.AddHttpClient<CatalogClient>(client =>
+        {
+            client.BaseAddress = new Uri("https://localhost:7040");
+        });
 
         builder.Services.AddControllers(options =>
         {
