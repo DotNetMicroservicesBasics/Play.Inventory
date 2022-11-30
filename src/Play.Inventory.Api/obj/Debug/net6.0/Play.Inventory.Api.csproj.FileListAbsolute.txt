@@ -43,3 +43,10 @@ D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\obj\Debug\net6.0
 D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\obj\Debug\net6.0\Play.Inventory.Api.pdb
 D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\obj\Debug\net6.0\Play.Inventory.Api.genruntimeconfig.cache
 D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\obj\Debug\net6.0\ref\Play.Inventory.Api.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Microsoft.Extensions.Http.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Microsoft.Extensions.Http.Polly.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Polly.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Polly.Extensions.Http.dll
