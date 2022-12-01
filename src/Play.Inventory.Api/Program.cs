@@ -1,4 +1,5 @@
 using Play.Common.Data;
+using Play.Common.MassTansit;
 using Play.Inventory.Api.Clients;
 using Play.Inventory.Data.Entities;
 using Polly;
@@ -16,35 +17,12 @@ public class Program
         // Add services to the container
 
         builder.Services.AddMongoDb()
-                        .AddMongoRepository<InventoryItem>("InventoryItems");
+                        .AddMongoRepository<InventoryItem>("InventoryItems")
+                        .AddMongoRepository<CatalogItem>("CatalogItems");
 
-        Random jitterer = new Random();
+        builder.Services.AddMassTransitWithRabbitMq();
 
-        builder.Services.AddHttpClient<CatalogClient>(client =>
-        {
-            client.BaseAddress = new Uri("https://localhost:7040");
-        })
-        .AddTransientHttpErrorPolicy(builder => builder.Or<TimeoutRejectedException>().WaitAndRetryAsync(
-            5,
-            retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(jitterer.Next(0, 1000)),
-            onRetry: (outcome, timespan, retryAttempt) =>
-            {
-                Console.WriteLine($"Delaying for {timespan.TotalSeconds} seconds, then making retry {retryAttempt}");
-            }
-        ))
-        .AddTransientHttpErrorPolicy(builder => builder.Or<TimeoutRejectedException>().CircuitBreakerAsync(
-            3,
-            TimeSpan.FromSeconds(15),
-            onBreak: (outcome, timespan) =>
-            {
-                Console.WriteLine($"Opening the circuit for {timespan.TotalSeconds} seconds...");
-            },
-            onReset: () =>
-            {
-                Console.WriteLine($"Closing the circuit...");
-            }
-        ))
-        .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(1));
+        AddCatalogClient(builder);
 
         builder.Services.AddControllers(options =>
         {
@@ -75,5 +53,34 @@ public class Program
         app.Run();
     }
 
+    private static void AddCatalogClient(WebApplicationBuilder builder)
+    {
+        Random jitterer = new Random();
 
+        builder.Services.AddHttpClient<CatalogClient>(client =>
+        {
+            client.BaseAddress = new Uri("https://localhost:7040");
+        })
+        .AddTransientHttpErrorPolicy(builder => builder.Or<TimeoutRejectedException>().WaitAndRetryAsync(
+            5,
+            retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(jitterer.Next(0, 1000)),
+            onRetry: (outcome, timespan, retryAttempt) =>
+            {
+                Console.WriteLine($"Delaying for {timespan.TotalSeconds} seconds, then making retry {retryAttempt}");
+            }
+        ))
+        .AddTransientHttpErrorPolicy(builder => builder.Or<TimeoutRejectedException>().CircuitBreakerAsync(
+            3,
+            TimeSpan.FromSeconds(15),
+            onBreak: (outcome, timespan) =>
+            {
+                Console.WriteLine($"Opening the circuit for {timespan.TotalSeconds} seconds...");
+            },
+            onReset: () =>
+            {
+                Console.WriteLine($"Closing the circuit...");
+            }
+        ))
+        .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(1));
+    }
 }

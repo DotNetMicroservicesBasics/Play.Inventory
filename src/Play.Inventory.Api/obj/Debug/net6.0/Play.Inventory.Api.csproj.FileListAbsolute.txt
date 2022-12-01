@@ -50,3 +50,11 @@ D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0
 D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Polly.dll
 D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Polly.Extensions.Http.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\MassTransit.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\MassTransit.Abstractions.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\MassTransit.AspNetCoreIntegration.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\MassTransit.ExtensionsDependencyInjectionIntegration.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\MassTransit.RabbitMqTransport.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\Play.Catalog.Contracts.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\RabbitMQ.Client.dll
+D:\Dev\MyGitHubRepos\Play\Play.Inventory\src\Play.Inventory.Api\bin\Debug\net6.0\System.Text.Json.dll

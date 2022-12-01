@@ -45,9 +45,13 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
-            "Play.Common": {
+            "Play.Catalog.Contracts": {
               "target": "Package",
               "version": "[1.0.0, )"
+            },
+            "Play.Common": {
+              "target": "Package",
+              "version": "[1.0.2, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
