@@ -5,12 +5,12 @@ using Play.Inventory.Data.Entities;
 
 namespace Play.Inventory.Api.Consumers
 {
-    public class CatalogItemCreatedUpdated : IConsumer<CatalogItemUpdated>
+    public class CatalogItemUpdatedConsumer : IConsumer<CatalogItemUpdated>
     {
 
         private readonly IRepository<CatalogItem> _catalogItemRepository;
 
-        public CatalogItemCreatedUpdated(IRepository<CatalogItem> catalogItemRepository)
+        public CatalogItemUpdatedConsumer(IRepository<CatalogItem> catalogItemRepository)
         {
             _catalogItemRepository = catalogItemRepository;
         }

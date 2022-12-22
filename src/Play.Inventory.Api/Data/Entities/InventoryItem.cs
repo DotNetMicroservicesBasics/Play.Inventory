@@ -8,6 +8,7 @@ namespace Play.Inventory.Data.Entities
         public Guid UserId { get; set; }
         public Guid CatalogItemId { get; set; }
         public int Quantity { get; set; }
+        public HashSet<Guid> MessageIds { get; set; } = new HashSet<Guid>();
         public DateTimeOffset AcquiredDate { get; set; }
     }
 }

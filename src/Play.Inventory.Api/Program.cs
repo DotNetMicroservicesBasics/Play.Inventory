@@ -2,8 +2,11 @@ using Play.Common.Data;
 using Play.Common.MassTansit;
 using Play.Inventory.Api.Clients;
 using Play.Inventory.Data.Entities;
+using Play.Common.Identity;
 using Polly;
 using Polly.Timeout;
+using MassTransit;
+using Play.Inventory.Api.Exceptions;
 
 namespace Play.Catalog.Api;
 
@@ -13,6 +16,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var allowedOriginSettingsKey = "AllowedOrigins";
 
         // Add services to the container
 
@@ -20,9 +24,15 @@ public class Program
                         .AddMongoRepository<InventoryItem>("InventoryItems")
                         .AddMongoRepository<CatalogItem>("CatalogItems");
 
-        builder.Services.AddMassTransitWithRabbitMq();
+        builder.Services.AddMassTransitWithRabbitMq(retryConfigurator =>
+        {
+            retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
+            retryConfigurator.Ignore(typeof(UnknownItemException));
+        });
 
-        AddCatalogClient(builder);
+        builder.Services.AddJwtBearerAuthentication();
+
+        //AddCatalogClient(builder);
 
         builder.Services.AddControllers(options =>
         {
@@ -41,9 +51,17 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseCors(corsBuilder =>
+            {
+                corsBuilder.WithOrigins(builder.Configuration[allowedOriginSettingsKey])
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+            });
         }
 
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 
