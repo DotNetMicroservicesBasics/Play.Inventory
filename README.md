@@ -1,0 +1,2 @@
+# Plat.Inventory
+    Inventory Service
