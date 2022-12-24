@@ -7,6 +7,7 @@ using Polly;
 using Polly.Timeout;
 using MassTransit;
 using Play.Inventory.Api.Exceptions;
+using GreenPipes;
 
 namespace Play.Catalog.Api;
 
