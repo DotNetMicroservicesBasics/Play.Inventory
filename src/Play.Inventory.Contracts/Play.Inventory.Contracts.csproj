@@ -4,6 +4,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageDescription>Contracts supported by the Catalog microservice.</PackageDescription>
+    <Authors>yasserMokh</Authors>
+    <Company>DotNetMicroservicesBasics</Company>
   </PropertyGroup>
 
 </Project>
