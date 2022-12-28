@@ -4,11 +4,10 @@ using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Play.Common.Contracts.Interfaces;
-using Play.Inventory.Api.Clients;
-using Play.Inventory.Api.Consts;
+using Play.Inventory.Api.Constants;
 using Play.Inventory.Contracts;
-using Play.Inventory.Contracts.Dtos;
-using Play.Inventory.Data.Entities;
+using Play.Inventory.Dtos;
+using Play.Inventory.Entities;
 
 namespace Play.Inventory.Api.Controllers
 {

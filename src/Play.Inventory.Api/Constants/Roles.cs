@@ -1,4 +1,4 @@
-namespace Play.Inventory.Api.Consts
+namespace Play.Inventory.Api.Constants
 {
     public static class Roles
     {

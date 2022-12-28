@@ -1,4 +1,4 @@
-namespace Play.Inventory.Contracts.Dtos
+namespace Play.Inventory.Dtos
 {
     public record GrantItemsDto(Guid UserId, Guid CatalogItemId, int Quantity);
 

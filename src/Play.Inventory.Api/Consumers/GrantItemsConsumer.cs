@@ -2,7 +2,7 @@ using MassTransit;
 using Play.Common.Contracts.Interfaces;
 using Play.Inventory.Api.Exceptions;
 using Play.Inventory.Contracts;
-using Play.Inventory.Data.Entities;
+using Play.Inventory.Entities;
 
 namespace Play.Inventory.Api.Consumers
 {

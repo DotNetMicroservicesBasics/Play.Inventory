@@ -1,6 +1,6 @@
 using Play.Common.Contracts.Interfaces;
 
-namespace Play.Inventory.Data.Entities
+namespace Play.Inventory.Entities
 {
     public class CatalogItem : IEntity
     {

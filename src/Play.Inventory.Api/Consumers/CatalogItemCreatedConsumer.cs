@@ -1,7 +1,7 @@
 using MassTransit;
 using Play.Catalog.Contracts.Dtos;
 using Play.Common.Contracts.Interfaces;
-using Play.Inventory.Data.Entities;
+using Play.Inventory.Entities;
 
 namespace Play.Inventory.Api.Consumers
 {

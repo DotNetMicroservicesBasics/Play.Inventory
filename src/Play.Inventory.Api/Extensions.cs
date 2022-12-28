@@ -1,5 +1,5 @@
-using Play.Inventory.Contracts.Dtos;
-using Play.Inventory.Data.Entities;
+using Play.Inventory.Dtos;
+using Play.Inventory.Entities;
 
 namespace Play.Inventory.Api
 {

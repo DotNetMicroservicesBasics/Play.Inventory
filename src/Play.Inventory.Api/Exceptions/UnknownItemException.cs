@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace Play.Inventory.Api.Exceptions
 {
     [Serializable]

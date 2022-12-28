@@ -2,7 +2,7 @@ using MassTransit;
 using Play.Common.Contracts.Interfaces;
 using Play.Inventory.Api.Exceptions;
 using Play.Inventory.Contracts;
-using Play.Inventory.Data.Entities;
+using Play.Inventory.Entities;
 
 namespace Play.Inventory.Api.Consumers
 {
@@ -45,7 +45,7 @@ namespace Play.Inventory.Api.Consumers
                 }
                 else
                 {
-                    await _inventoryItemsRepository.UpdateAsync(inventoryItem);                    
+                    await _inventoryItemsRepository.UpdateAsync(inventoryItem);
                 }
                 await context.Publish(new InventoryItemUpdated(messsage.UserId, messsage.CatalogItemId, inventoryItem.Quantity));
 
