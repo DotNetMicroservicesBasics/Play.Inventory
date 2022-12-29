@@ -1,6 +1,7 @@
 
 using GreenPipes;
 using Play.Common.Data;
+using Play.Common.HealthChecks;
 using Play.Common.Identity;
 using Play.Common.MassTansit;
 using Play.Inventory.Api.Exceptions;
@@ -39,6 +40,9 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddHealthChecks()
+                        .AddMongo();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -60,8 +64,9 @@ public class Program
 
         app.UseAuthorization();
 
-
         app.MapControllers();
+
+        app.MapPlayEconomyHealthChecks();
 
         app.Run();
     }
