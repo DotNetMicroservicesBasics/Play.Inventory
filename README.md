@@ -43,3 +43,47 @@ docker tag play.inventory:$version "$acrname.azurecr.io/play.inventory:$version"
 az acr login --name $acrname
 docker push "$acrname.azurecr.io/play.inventory:$version"
 ```
+
+## Create kubernetes namespace
+```powershell
+$namespace="playinventory"
+kubectl create namespace $namespace
+```
+
+## Create kubernetes pod
+```powershell
+kubectl apply -f .\kubernetes\inventory.yaml -n $namespace
+
+# list pods in namespace
+kubectl get pods -n $namespace -w
+
+# output pod logs
+$podname="playinventory-deployement-579757ccbd-zfm7w"
+kubectl logs $podname -n $namespace
+
+# list pod details
+kubectl describe pod $podname -n $namespace
+
+# list services (see puplic ip)
+kubectl get services -n $namespace
+
+# see events
+kubectl get events -n $namespace
+```
+
+## Create Azure Managed Identity and granting it access to Key Vault secrets
+```powershell
+$appname="playeconomy"
+az identity create --resource-group $appname --name $namespace
+
+$kvname="playeconomyazurekeyvault"
+$IDENTITY_CLIENT_ID=az identity show -g $appname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_CLIENT_ID
+```
+
+## Establish the federated identity credential
+```powershell
+$aksname="playeconomyakscluster"
+$AKS_OIDC_ISSUER=az aks show -n $aksname -g $appname --query "oidcIssuerProfile.issuerUrl" -otsv
+
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $appname --issuer $AKS_OIDC_ISSUER --subject system:serviceaccount:"${namespace}":"${namespace}-serviceaccount"

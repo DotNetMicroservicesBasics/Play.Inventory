@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: playtinventory-serviceaccount
+  annotations: 
+    azure.workload.identity/client-id: ab4803a4-57a6-491f-9669-56293d2f8f0d
+  labels:
+    azure.workload.identity/use: "true"
