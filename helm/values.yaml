@@ -4,6 +4,9 @@ image:
   repository: playeconomyazurecontainerregistry.azurecr.io/play.inventory
   tag: 1.0.4
 
+envVariables:  
+  IdentitySettings__Authority: https://playeconomygateway.eastus.cloudapp.azure.com/identity-svc
+
 container:
   port: 5261
 

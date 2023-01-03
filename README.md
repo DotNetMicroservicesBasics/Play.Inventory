@@ -58,7 +58,7 @@ kubectl apply -f .\kubernetes\inventory.yaml -n $namespace
 kubectl get pods -n $namespace -w
 
 # output pod logs
-$podname="playinventory-deployement-597f59696f-dng2h"
+$podname="playinventory-deployement-bf99f97c5-kcxnf"
 kubectl logs $podname -n $namespace
 
 # list pod details
