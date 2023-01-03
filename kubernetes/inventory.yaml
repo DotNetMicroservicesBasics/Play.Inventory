@@ -1,8 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playinventory-deployement
+spec:
+  selector:
+    matchLabels:
+      app: playinventory
+  template:
+    metadata:
+      labels:
+        app: playinventory
+    spec:
+      serviceAccountName: playinventory-serviceaccount
+      containers:
+        - name: playinventory
+          image: playeconomyazurecontainerregistry.azurecr.io/play.inventory:1.0.4
+          env:
+            - name: ServiceSettings__MessageBroker
+              value: AZURESERVICEBUS
+            - name: ServiceSettings__KeyVaultName
+              value: playeconomyazurekeyvault
+            - name: IdentitySettings__Authority
+              value: https://playeconomygateway.eastus.cloudapp.azure.com/identity-svc           
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 5261
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 5261
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 5261
+            initialDelaySeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: playinventory-service
+spec:
+  type: ClusterIP
+  selector:
+    app: playinventory
+  ports:
+  - port: 80
+    targetPort: 5261
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: playtinventory-serviceaccount
+  name: playinventory-serviceaccount
   annotations: 
     azure.workload.identity/client-id: ab4803a4-57a6-491f-9669-56293d2f8f0d
   labels:

@@ -1,0 +1,10 @@
+microserviceName: playinventory
+
+image: 
+  repository: playeconomyazurecontainerregistry.azurecr.io/play.inventory
+  tag: 1.0.4
+
+container:
+  port: 5261
+
+identityClientId: ab4803a4-57a6-491f-9669-56293d2f8f0d

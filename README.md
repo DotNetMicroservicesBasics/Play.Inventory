@@ -58,7 +58,7 @@ kubectl apply -f .\kubernetes\inventory.yaml -n $namespace
 kubectl get pods -n $namespace -w
 
 # output pod logs
-$podname="playinventory-deployement-579757ccbd-zfm7w"
+$podname="playinventory-deployement-597f59696f-dng2h"
 kubectl logs $podname -n $namespace
 
 # list pod details
@@ -69,6 +69,18 @@ kubectl get services -n $namespace
 
 # see events
 kubectl get events -n $namespace
+
+# list deployments
+kubectl get deployments -n $namespace
+
+# delete deployment
+kubectl delete deployment $namespace-deployement -n $namespace
+
+# delete service
+kubectl delete service $namespace-service -n $namespace
+
+# delete service account
+kubectl delete serviceaccount $namespace-serviceaccount -n $namespace
 ```
 
 ## Create Azure Managed Identity and granting it access to Key Vault secrets
@@ -87,3 +99,28 @@ $aksname="playeconomyakscluster"
 $AKS_OIDC_ISSUER=az aks show -n $aksname -g $appname --query "oidcIssuerProfile.issuerUrl" -otsv
 
 az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $appname --issuer $AKS_OIDC_ISSUER --subject system:serviceaccount:"${namespace}":"${namespace}-serviceaccount"
+```
+
+## Install Helm Chart
+```powershell
+helm install playcatalog-svc .\helm -f .\helm\values.yaml -n $namespace
+```
+
+## Install Helm Chart from Container Registery
+```powershell
+
+$helmUser=[guid]::Empty.Guid
+$helmPassword=az acr login --name $acrname --expose-token --query accessToken -o tsv
+
+helm registry login "$acrname.azurecr.io" --username $helmUser --password $helmPassword
+
+$hemlChartVersion="0.1.0"
+
+helm upgrade --install playinventory-svc oci://$acrname.azurecr.io/helm/microservice --version $hemlChartVersion -f .\helm\values.yaml -n $namespace
+
+# if failed add --debug to see more info
+helm upgrade --install playinventory-svc oci://$acrname.azurecr.io/helm/microservice --version $hemlChartVersion -f .\helm\values.yaml -n $namespace --debug
+
+# to make sure helm Charts cash updated
+helm repo update
+```
