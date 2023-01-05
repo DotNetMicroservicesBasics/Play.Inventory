@@ -124,3 +124,9 @@ helm upgrade --install playinventory-svc oci://$acrname.azurecr.io/helm/microser
 # to make sure helm Charts cash updated
 helm repo update
 ```
+
+## Required repository secrets for Github workflow
+```powershell
+NUGET_READ_PAT: Created in GitHub user profile --> Settings --> Developer settings --> Personal access token
+NUGET_WRITE_PAT: Created in GitHub user profile --> Settings --> Developer settings --> Personal access token
+```
