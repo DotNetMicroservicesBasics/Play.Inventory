@@ -4,6 +4,7 @@ using Play.Common.Configuration;
 using Play.Common.Data;
 using Play.Common.HealthChecks;
 using Play.Common.Identity;
+using Play.Common.Logging;
 using Play.Common.MassTansit;
 using Play.Inventory.Api.Exceptions;
 using Play.Inventory.Entities;
@@ -15,14 +16,14 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        if(builder.Environment.IsProduction()){
-            builder.Configuration.ConfigureAzureKeyVault();
-        }
+        
+        builder.ConfigureAzureKeyVault();        
 
         var allowedOriginsSettingsKey = "AllowedOrigins";
 
         // Add services to the container.
+
+        builder.Services.AddSeqLogging(builder.Configuration);
 
         builder.Services.AddMongoDb()
                         .AddMongoRepository<InventoryItem>("InventoryItems")
