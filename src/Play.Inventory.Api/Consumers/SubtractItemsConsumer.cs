@@ -10,11 +10,13 @@ namespace Play.Inventory.Api.Consumers
     {
         private readonly IRepository<InventoryItem> _inventoryItemsRepository;
         private readonly IRepository<CatalogItem> _catalogItemsRepository;
+        private readonly ILogger<SubtractItemsConsumer> _logger;
 
-        public SubtractItemsConsumer(IRepository<CatalogItem> catalogItemsRepository, IRepository<InventoryItem> inventoryItemsRepository)
+        public SubtractItemsConsumer(IRepository<CatalogItem> catalogItemsRepository, IRepository<InventoryItem> inventoryItemsRepository, ILogger<SubtractItemsConsumer> logger)
         {
             _catalogItemsRepository = catalogItemsRepository;
             _inventoryItemsRepository = inventoryItemsRepository;
+            _logger = logger;
         }
 
         public async Task Consume(ConsumeContext<SubtractItems> context)
