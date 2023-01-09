@@ -1,5 +1,4 @@
-
-using GreenPipes;
+using MassTransit;
 using Play.Common.Configuration;
 using Play.Common.Data;
 using Play.Common.HealthChecks;
