@@ -1,5 +1,7 @@
+using System.Diagnostics.Metrics;
 using MassTransit;
 using Play.Common.Contracts.Interfaces;
+using Play.Common.Settings;
 using Play.Inventory.Api.Exceptions;
 using Play.Inventory.Contracts;
 using Play.Inventory.Entities;
@@ -11,12 +13,17 @@ namespace Play.Inventory.Api.Consumers
         private readonly IRepository<InventoryItem> _inventoryItemsRepository;
         private readonly IRepository<CatalogItem> _catalogItemsRepository;
         private readonly ILogger<GrantItemsConsumer> _logger;
+        private readonly Counter<int> _grantItemsCounter;
 
-        public GrantItemsConsumer(IRepository<CatalogItem> catalogItemsRepository, IRepository<InventoryItem> inventoryItemsRepository, ILogger<GrantItemsConsumer> logger)
+        public GrantItemsConsumer(IRepository<CatalogItem> catalogItemsRepository, IRepository<InventoryItem> inventoryItemsRepository, ILogger<GrantItemsConsumer> logger, IConfiguration configuration)
         {
             _catalogItemsRepository = catalogItemsRepository;
             _inventoryItemsRepository = inventoryItemsRepository;
             _logger = logger;
+
+            var serviceSettings = configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
+            var meter=new Meter(serviceSettings.ServiceName);
+            _grantItemsCounter=meter.CreateCounter<int>("ItemsGranted");
         }
 
         public async Task Consume(ConsumeContext<GrantItems> context)
@@ -51,6 +58,8 @@ namespace Play.Inventory.Api.Consumers
                 inventoryItem.Quantity += message.Quantity;
                 await _inventoryItemsRepository.UpdateAsync(inventoryItem);
             }
+
+            _grantItemsCounter.Add(1, new KeyValuePair<string, object?>(nameof(inventoryItem.CatalogItemId), inventoryItem.CatalogItemId));
 
             var itemGrantedTask = context.Publish(new InventoryItemsGranted(message.CorrelationId));
             var itemUpdatedTask = context.Publish(new InventoryItemUpdated(message.UserId, message.CatalogItemId, inventoryItem.Quantity));

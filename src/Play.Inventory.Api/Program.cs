@@ -24,7 +24,8 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddSeqLogging(builder.Configuration)
-                        .AddTracing(builder.Configuration);
+                        .AddTracing(builder.Configuration)
+                        .AddMetrics(builder.Configuration);
 
         builder.Services.AddMongoDb()
                         .AddMongoRepository<InventoryItem>("InventoryItems")
@@ -64,6 +65,8 @@ public class Program
                             .AllowAnyMethod();
             });
         }
+
+        app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
         app.UseHttpsRedirection();
 
